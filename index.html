@@ -1,64 +1,36 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-
-    <script src="/socket.io/socket.io.js"></script>
-
-    <script>
-        $(function() {
-
-            var iosocket = io.connect();
-
-            iosocket.on('connect', function() {
-
-                $('#incomingChatMessages').append($('<li>Connected</li>'));
-
-                iosocket.on('message', function(message) {
-
-                    $('#incomingChatMessages').append($('<li></li>').text(message));
-
-                });
-
-                iosocket.on('disconnect', function() {
-
-                    $('#incomingChatMessages').append('<li>Disconnected</li>');
-
-                });
-
-            });
-
-            $('#outgoingChatMessage').keypress(function(event) {
-
-                if (event.which == 13) {
-
-                    event.preventDefault();
-
-                    iosocket.send($('#outgoingChatMessage').val());
-
-                    $('#incomingChatMessages').append($('<li></li>').text($('#outgoingChatMessage').val()));
-
-                    $('#outgoingChatMessage').val('');
-
-                }
-
-            });
-
-        });
-    </script>
-
+    <meta charset="UTF-8">
+    <title>Simple chat</title>
+    <link rel="stylesheet" href="assets/css.css">
 </head>
 
 <body>
+    <div class="nickname_container" id="nick">
 
-    Incoming Chat:
-    <ul id="incomingChatMessages"></ul>
+        <span>Type your nickname:</span>
+        <form id="submit"><input type="text" id="nickname" /></form>
 
-    <br />
+    </div>
 
-    <input type="text" id="outgoingChatMessage">
+    <div id="chat" hidden>
 
+        <div class="menu"=>
+            <div class="name" id="name">Alex</div>
+            <div class="last" id="time">18:09</div>
+        </div>
+
+        <ol class="chat">
+
+        </ol>
+
+        <input class="textarea" type="text" placeholder="Type here!" id="textarea" />
+    </div>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/socket.io-client/socket.io.js"></script>
+    <script src="assets/js.js"></script>
 </body>
 
 </html>
